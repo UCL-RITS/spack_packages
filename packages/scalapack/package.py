@@ -41,5 +41,5 @@ class Scalapack(Package):
         source_directory = self.stage.source_path
         with working_dir(build_directory, create=True):
             cmake(source_directory, *options)
-            make()
+            make("all")
             make("install")
