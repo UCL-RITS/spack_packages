@@ -4,9 +4,9 @@ class Greatcmakecookoff(Package):
     """A bunch of cmake recipes"""
 
     homepage = "https://github.com/UCL/GreatCMakeCookOff"
-    url      = "https://github.com/UCL/GreatCMakeCookOff.git"
+    url      = "https://github.com/UCL/GreatCMakeCookOff/archive/v2.1.1.tar.gz"
 
-    version('2.1.0', git=url, tag="v2.1.0")
+    version('2.1.1', "30b52a58c8c50c4645413dc7903ce71347ff65c2")
 
     def install(self, spec, prefix):
         from os.path import join
