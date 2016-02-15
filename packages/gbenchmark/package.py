@@ -9,9 +9,25 @@ class Gbenchmark(Package):
     version('1.0.0', '4f778985dce02d2e63262e6f388a24b595254a93')
     variant("debug", default=False, description="Installs with debug options")
 
+    def patch(self):
+        filter_file(
+            r'add_cxx_compiler_flag..fstrict.aliasing.',
+            r'##### add_cxx_compiler_flag(-fstrict-aliasing)',
+            'CMakeLists.txt'
+        )
+        filter_file(
+            r'add_cxx_compiler_flag..Werror',
+            r'##### add_cxx_compiler_flag(-Werror',
+            'CMakeLists.txt'
+        )
+
     def install(self, spec, prefix):
         options = []
         options.extend(std_cmake_args)
+        if self.compiler.name == 'intel':
+            options.append("-DCMAKE_CXX_FLAGS='-no-ansi-alias -fno-strict-aliasing'")
+            options.append("-DCMAKE_C_FLAGS='-no-ansi-alias -fno-strict-aliasing'")
+            options.append("-DBENCHMARK_ENABLE_TESTING=OFF")
         if '+debug' in spec:
             options.append('-DCMAKE_BUILD_TYPE:STRING=Debug')
         else:
