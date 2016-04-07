@@ -31,6 +31,28 @@ class Belos(Package):
     depends_on('lapack', when='+lapack')
     depends_on('mpi', when="+mpi")
 
+    def patch(self):
+        filter_file(
+            r"  \{ ([A-Z]*_F77.*), &lda(.*) }",
+            "  {\n"
+            "    int const llda = std::min(lda, 1);\n"
+            "    \\1, &llda\\2\n"
+            "  }",
+            "packages/teuchos/numerics/src/Teuchos_BLAS.cpp"
+        );
+        filter_file(
+            r"    ([A-Z]*_F77.*), &ldb",
+            "    int const lldb = std::min(ldb, 1);\n"
+            "    \\1, &lldb",
+            "packages/teuchos/numerics/src/Teuchos_BLAS.cpp"
+        );
+        filter_file(
+            r"    ([A-Z]*_F77.*), &ldc",
+            "    int const lldc = std::min(ldc, 1);\n"
+            "    \\1, &lldc",
+            "packages/teuchos/numerics/src/Teuchos_BLAS.cpp"
+        );
+
     def install(self, spec, prefix):
         from os import environ
         from os.path import dirname
@@ -48,9 +70,9 @@ class Belos(Package):
                         '-DBUILD_SHARED_LIBS:BOOL=%s' % ('ON' if '+shared' in spec else 'OFF'),
                         '-DTPL_ENABLE_MPI:BOOL=' + ('ON' if spec.satisfies('+mpi') else 'OFF'),
                         '-DTrilinos_ENABLE_OpenMP:STRING=' + ('ON' if spec.satisfies('+openmp') else 'OFF'),
-                        '-DTrilinos_ENABLE_Epetra:BOOL=OFF',
+                        '-DTrilinos_ENABLE_Epetra:BOOL=ON' + ('ON' if spec.satisfies('+epetra') else 'OFF'),
                         '-DTrilinos_ENABLE_Tpetra:BOOL=' + ('ON' if spec.satisfies('+tpetra') else 'OFF'),
-                        '-DTrilinos_ENABLE_Belos:BOOL=' + ('ON' if spec.satisfies('+epetra') else 'OFF'),
+                        '-DTrilinos_ENABLE_Belos:BOOL=ON',
                         '-DTPL_ENABLE_BLAS:BOOL=%s' + ('ON' if blas else 'OFF'),
                         '-DTPL_ENABLE_LAPACK:BOOL=%s' + ('ON' if spec.satisfies('+lapack') else 'OFF'),
                         '-DTrilinos_ENABLE_CXX11=' + ('ON' if spec.satisfies('+cpp11') else 'OFF')
