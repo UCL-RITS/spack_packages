@@ -35,20 +35,20 @@ class Belos(Package):
         filter_file(
             r"  \{ ([A-Z]*_F77.*), &lda(.*) }",
             "  {\n"
-            "    int const llda = std::min(lda, 1);\n"
+            "    int const llda = std::max(lda, 1);\n"
             "    \\1, &llda\\2\n"
             "  }",
             "packages/teuchos/numerics/src/Teuchos_BLAS.cpp"
         );
         filter_file(
             r"    ([A-Z]*_F77.*), &ldb",
-            "    int const lldb = std::min(ldb, 1);\n"
+            "    int const lldb = std::max(ldb, 1);\n"
             "    \\1, &lldb",
             "packages/teuchos/numerics/src/Teuchos_BLAS.cpp"
         );
         filter_file(
             r"    ([A-Z]*_F77.*), &ldc",
-            "    int const lldc = std::min(ldc, 1);\n"
+            "    int const lldc = std::max(ldc, 1);\n"
             "    \\1, &lldc",
             "packages/teuchos/numerics/src/Teuchos_BLAS.cpp"
         );
