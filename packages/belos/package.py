@@ -70,7 +70,7 @@ class Belos(Package):
                         '-DBUILD_SHARED_LIBS:BOOL=%s' % ('ON' if '+shared' in spec else 'OFF'),
                         '-DTPL_ENABLE_MPI:BOOL=' + ('ON' if spec.satisfies('+mpi') else 'OFF'),
                         '-DTrilinos_ENABLE_OpenMP:STRING=' + ('ON' if spec.satisfies('+openmp') else 'OFF'),
-                        '-DTrilinos_ENABLE_Epetra:BOOL=ON' + ('ON' if spec.satisfies('+epetra') else 'OFF'),
+                        '-DTrilinos_ENABLE_Epetra:BOOL=' + ('ON' if spec.satisfies('+epetra') else 'OFF'),
                         '-DTrilinos_ENABLE_Tpetra:BOOL=' + ('ON' if spec.satisfies('+tpetra') else 'OFF'),
                         '-DTrilinos_ENABLE_Belos:BOOL=ON',
                         '-DTPL_ENABLE_BLAS:BOOL=%s' + ('ON' if blas else 'OFF'),
