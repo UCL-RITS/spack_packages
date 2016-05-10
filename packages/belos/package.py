@@ -8,14 +8,12 @@ class Belos(Package):
     A unique design feature of Trilinos is its focus on packages.
     """
     homepage = "https://trilinos.org/"
-    url = "http://trilinos.csbsju.edu/download/files/trilinos-12.2.1-Source.tar.gz"
 
-    version('12.4.2', '7c830f7f0f68b8ad324690603baf404e')
-    version('12.2.1', '6161926ea247863c690e927687f83be9')
-    version('12.0.1', 'bd99741d047471e127b8296b2ec08017')
-    version('11.14.3', '2f4f83f8333e4233c57d0f01c4b57426')
-    version('11.14.2', 'a43590cf896c677890d75bfe75bc6254')
-    version('11.14.1', '40febc57f76668be8b6a77b7607bb67f')
+    version(
+        '12.6.3',
+        '801bb24b175f52608cc1bccebb1523b6dd827839',
+        url="https://github.com/trilinos/Trilinos/archive/trilinos-release-12-6-3.tar.gz"
+    )
 
     variant('shared', default=True, description='Enables the build of shared libraries')
     variant('debug', default=False, description='Builds a debug version of the libraries')
