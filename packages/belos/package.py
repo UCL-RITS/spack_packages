@@ -73,7 +73,8 @@ class Belos(Package):
                         '-DTrilinos_ENABLE_Belos:BOOL=ON',
                         '-DTPL_ENABLE_BLAS:BOOL=%s' + ('ON' if blas else 'OFF'),
                         '-DTPL_ENABLE_LAPACK:BOOL=%s' + ('ON' if spec.satisfies('+lapack') else 'OFF'),
-                        '-DTrilinos_ENABLE_CXX11=' + ('ON' if spec.satisfies('+cpp11') else 'OFF')
+                        '-DTrilinos_ENABLE_CXX11=' + ('ON' if spec.satisfies('+cpp11') else 'OFF'),
+                        '-DTrilinos_ENABLE_Fortran=OFF'
                         ])
         if spec.satisfies('+blas'):
             options.append('-DBLAS_LIBRARY_DIRS:PATH=%s' % spec['blas'].prefix)
