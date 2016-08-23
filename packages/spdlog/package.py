@@ -4,7 +4,6 @@ class Spdlog(Package):
     """Very fast, header only, C++ logging library"""
 
     homepage = "https://github.comg/abime/spdlog"
-    url      = "https://github.com/google/benchmark/releases/tag/v1.0.0"
 
     version('dev', git='https://github.com/gabime/spdlog.git')
     variant("debug", default=False, description="Installs with debug options")
