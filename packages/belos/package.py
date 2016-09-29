@@ -78,8 +78,10 @@ class Belos(Package):
                         ])
         if spec.satisfies('+blas'):
             options.append('-DBLAS_LIBRARY_DIRS:PATH=%s' % spec['blas'].prefix)
+            options.append('-DTPL_BLAS_LIBRARIES:PATH=%s' % spec['blas'].blas_libs)
         if spec.satisfies('+lapack'):
             options.append('-DLAPACK_LIBRARY_DIRS:PATH=%s' % spec['lapack'].prefix)
+            options.append('-DTPL_LAPACK_LIBRARIES:PATH=%s' % spec['blas'].lapack_libs)
         if spec.satisfies('+mpi'):
             options.append('-DMPI_BIN_DIR:FILEPATH=%s' % dirname(environ['CC']))
 
