@@ -18,15 +18,8 @@ class Scalapack(Package):
 
     @when('^openblas')
     def libs_options(self, spec):
-        from os.path import join
-        from glob import glob
-        blasdir = self.spec['openblas'].prefix.lib
-        ending = 'dylib' if 'darwin' in spec.architecture else 'so'
-        return ["-DBLAS_LIBRARIES=openblas", "-DLAPACK_LIBRARIES=openblas"]
-        # for pattern in ['libopenblas', 'libopenblas.*', 'libopenblas*.*']:
-        #     blaslibs = ';'.join(glob(join(blasdir, pattern + "." + ending)))
-        #     if len(blaslibs) > 0:
-        #         return ['-DBLAS_LIBRARIES="%s"' % blaslibs, '-DLAPACK_LIBRARIES="%s"' % blaslibs]
+        return ["-DBLAS_LIBRARIES=%s" % self.spec['openblas'].blas_libs,
+                "-DLAPACK_LIBRARIES=%s" % self.spec['openblas'].lapack_libs]
 
     def install(self, spec, prefix):
         options = []
