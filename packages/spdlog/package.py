@@ -15,6 +15,7 @@ class Spdlog(Package):
             options.append('-DCMAKE_BUILD_TYPE:STRING=Debug')
         else:
             options.append('-DCMAKE_BUILD_TYPE:STRING=Release')
+        options.append('-DBUILD_TESTING=FALSE')
 
         build_directory = join_path(self.stage.path, 'spack-build')
         source_directory = self.stage.source_path
