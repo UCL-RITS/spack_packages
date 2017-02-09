@@ -61,6 +61,7 @@ class Belos(Package):
             raise RuntimeError("Need one of Epetra or Tpetra")
 
         options = [u for u in std_cmake_args]
+
         blas = spec.satisfies('+blas') or spec.satisfies('+lapack')
         options.extend(['-DTrilinos_ENABLE_TESTS:BOOL=OFF',
                         '-DTrilinos_ENABLE_EXAMPLES:BOOL=OFF',
@@ -77,13 +78,16 @@ class Belos(Package):
                         '-DTrilinos_ENABLE_Fortran=OFF'
                         ])
         if spec.satisfies('+blas'):
-            options.append('-DBLAS_LIBRARY_DIRS:PATH=%s' % spec['blas'].prefix)
-            options.append('-DTPL_BLAS_LIBRARIES:PATH=%s' % spec['blas'].blas_libs)
+            blas = spec['blas'].blas_libs
+            options.append('-DBLAS_LIBRARY_NAMES=%s' % ';'.join(blas.names))
+            options.append('-DBLAS_LIBRARY_DIRS=%s' % ';'.join(blas.directories))
         if spec.satisfies('+lapack'):
-            options.append('-DLAPACK_LIBRARY_DIRS:PATH=%s' % spec['lapack'].prefix)
-            options.append('-DTPL_LAPACK_LIBRARIES:PATH=%s' % spec['blas'].lapack_libs)
+            lapack = spec['lapack'].lapack_libs
+            options.append('-DLAPACK_LIBRARY_NAMES=%s' % ';'.join(lapack.names))
+            options.append('-DLAPACK_LIBRARY_DIRS=%s' % ';'.join(lapack.directories))
         if spec.satisfies('+mpi'):
-            options.append('-DMPI_BIN_DIR:FILEPATH=%s' % dirname(environ['CC']))
+            mpi_bin = spec['mpi'].prefix.bin
+            options.append('-DMPI_BIN_DIR:FILEPATH=%s' % mpi_bin)
 
         with working_dir('spack-build', create=True):
            cmake('..', *options)
