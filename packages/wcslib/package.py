@@ -5,7 +5,7 @@ class Wcslib(Package):
     homepage = "http://www.atnf.csiro.au/people/mcalabre/WCS/"
     url      = "ftp://ftp.atnf.csiro.au/pub/software/wcslib/wcslib.tar.bz2"
 
-    version('5.15', '053894e777fdf1ee3a9987362f2cd74d8a913381')
+    version('5.16', 'b7bcb6426405cb15e13fb8b217c954ebe869a522')
     parallel = False
 
     def install(self, spec, prefix):
